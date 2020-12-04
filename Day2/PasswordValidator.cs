@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Day2
+﻿namespace Day2
 {
     /// <summary>
     /// Ensure a given password has MinimumLength <= number of Letter <= MaximumLength
     /// </summary>
-    record PasswordValidator(int MustHavePosition1, int MustHavePosition2, char Letter)
+    internal record PasswordValidator(int MustHavePosition1, int MustHavePosition2, char Letter)
     {
         /// <summary>
         /// Test if password is valid.
