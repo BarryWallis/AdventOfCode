@@ -95,8 +95,7 @@ namespace Day4
         ///     If in, the number must be at least 59 and at most 76; 
         /// otherwise <see langword="false"/>.</returns>
         static bool ValidateHgt(string value)
-            => value.Length >= 3
-               && int.TryParse(value[0..^2], out int height)
+            => int.TryParse(value[0..^2], out int height)
                && (value[^2..^0] == "cm" || value[^2..^0] == "in")
                && ((value[^2..^0] == "cm"
                     && height >= 150
