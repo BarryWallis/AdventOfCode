@@ -9,7 +9,7 @@ namespace Day5
         {
             StreamReader streamReader = new(args[0]);
             BoardingPassScanner boardingPassScanner = new(streamReader);
-            Console.WriteLine(boardingPassScanner.FindHighestBoardingPass());
+            Console.WriteLine(boardingPassScanner.FindMySeat());
         }
     }
 }
