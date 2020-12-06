@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -38,10 +37,15 @@ namespace Day6
         /// <returns>The number of discrete questions answered yes.</returns>
         internal int YesQuestions()
         {
-            List<char> collectedYesQuestions = new();
+            List<char> collectedYesQuestions = new(26);
+            for (char c = 'a'; c <= 'z'; c++)
+            {
+                collectedYesQuestions.Add(c);
+            }
+
             foreach (string person in _people)
             {
-                collectedYesQuestions = collectedYesQuestions.Union(person).ToList();
+                collectedYesQuestions = collectedYesQuestions.Intersect(person).ToList();
             }
 
             return collectedYesQuestions.Count;
