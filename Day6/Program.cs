@@ -8,7 +8,7 @@ namespace Day6
         static void Main(string[] args)
         {
             StreamReader streamReader = new(args[0]);
-            CustomsDeclarationScanner customsDeclarationScanner = new CustomsDeclarationScanner(streamReader);
+            CustomsDeclarationScanner customsDeclarationScanner = new(streamReader);
             Console.WriteLine(customsDeclarationScanner.Scan());
         }
     }

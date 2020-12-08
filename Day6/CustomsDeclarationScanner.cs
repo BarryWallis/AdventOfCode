@@ -21,7 +21,7 @@ namespace Day6
             int yesQuestions = 0;
             while (!_streamReader.EndOfStream)
             {
-                CustomsDeclaration customsDeclaration = new CustomsDeclaration(_streamReader);
+                CustomsDeclaration customsDeclaration = new(_streamReader);
                 yesQuestions += customsDeclaration.YesQuestions();
             }
 
