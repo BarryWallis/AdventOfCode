@@ -14,7 +14,7 @@ namespace Day7
         {
             StreamReader streamReader = new(args[0]);
             LuggageProcessor luggageProcessor = new(streamReader);
-            Console.WriteLine(luggageProcessor.HowManyBags(args[1] + " " + args[2]));
+            Console.WriteLine(luggageProcessor.HowManyBagsInside(args[1] + " " + args[2]));
         }
     }
 }

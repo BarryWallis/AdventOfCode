@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace Day7
         /// <summary>
         /// Determine how many different bags the given bag can be in.
         /// </summary>
-        /// <param name="bagDescriptions">The description of a bag.</param>
+        /// <param name="bagName">The name of a bag.</param>
         /// <returns></returns>
         internal int HowManyBags(string bagName)
         {
@@ -51,6 +52,41 @@ namespace Day7
             return numberOfBags;
         }
 
+        /// <summary>
+        /// Determine how many bags must be inside the given bag.
+        /// </summary>
+        /// <param name="bagName">The name of a bag.</param>
+        /// <returns>The umber of bags inside <paramref name="bagName"/>.</returns>
+        internal int HowManyBagsInside(string bagName) => CountBagsInside(_bags.First(b => b.Name == bagName)) - 1;
+
+        /// <summary>
+        /// Return the number of bags inside the <paramref name="bag"/>.
+        /// </summary>
+        /// <param name="bag">The bag to count the number of bags inside.</param>
+        /// <returns>The number of bags inside.</returns>
+        private int CountBagsInside(Bag bag)
+        {
+            int count = 1;
+            //if (bag.CanContain.Count == 0)
+            //{
+            //    count = 0;
+            //}
+            //else
+            //{
+                foreach (KeyValuePair<string, int> containedBag in bag.CanContain)
+                {
+                    count += containedBag.Value * CountBagsInside(_bags.First(b => b.Name == containedBag.Key));
+                }
+            //}
+            return count;
+        }
+
+        /// <summary>
+        /// Return the number of bags that contain the <paramref name="bagName"/>. 
+        /// </summary>
+        /// <param name="bag">The bag to check.</param>
+        /// <param name="bagName">The name of the bag to check for.</param>
+        /// <returns></returns>
         private int CountBags(Bag bag, string bagName)
         {
             int returnValue = 0;
