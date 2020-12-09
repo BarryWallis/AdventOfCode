@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
@@ -55,15 +54,59 @@ namespace Day8
             Debug.Assert(_programCounter is >= 0 && _programCounter < _memory.Count);
             #endregion
 
-            while (!_memory[_programCounter].HasBeenExecuted)
+            FixProgram();
+
+            #region Postconditions
+            #endregion
+        }
+
+        private void FixProgram()
+        {
+            for (int i = 0; i < _memory.Count; i++)
+            {
+                switch (_memory[i].Instruction.Operation)
+                {
+                    case Operation.nop:
+                        _memory[i].Instruction = _memory[i].Instruction with { Operation = Operation.jmp };
+                        ExecuteProgram();
+                        if (_programCounter >= _memory.Count)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            _memory[i].Instruction = _memory[i].Instruction with { Operation = Operation.nop };
+                        }
+
+                        break;
+                    case Operation.jmp:
+                        _memory[i].Instruction = _memory[i].Instruction with { Operation = Operation.nop };
+                        ExecuteProgram();
+                        if (_programCounter >= _memory.Count)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            _memory[i].Instruction = _memory[i].Instruction with { Operation = Operation.jmp };
+                        }
+
+                        break;
+                }
+            }
+        }
+
+        private void ExecuteProgram()
+        {
+            _programCounter = 0;
+            Accumulator = 0;
+            _memory.ForEach(c => c.HasBeenExecuted = false);
+            while (_programCounter < _memory.Count && !_memory[_programCounter].HasBeenExecuted)
             {
                 Instruction instruction = _memory[_programCounter].Instruction;
                 _memory[_programCounter].HasBeenExecuted = true;
                 _executeInstructions[instruction.Operation](instruction.Argument);
             }
-
-            #region Postconditions
-            #endregion
         }
 
         /// <summary>
@@ -96,7 +139,6 @@ namespace Day8
             _programCounter += argument;
 
             #region Postcondition
-            Debug.Assert(_programCounter < _memory.Count);
             Debug.Assert(_programCounter >= 0);
             #endregion
         }
@@ -111,7 +153,7 @@ namespace Day8
             _programCounter += 1;
 
             #region Postcondition
-            Debug.Assert(_programCounter < _memory.Count);
+            // None
             #endregion
         }
     }
