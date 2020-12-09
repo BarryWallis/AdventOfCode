@@ -3,9 +3,9 @@ using System.IO;
 
 namespace Day6
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             StreamReader streamReader = new(args[0]);
             CustomsDeclarationScanner customsDeclarationScanner = new(streamReader);

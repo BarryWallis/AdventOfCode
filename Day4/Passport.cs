@@ -9,7 +9,7 @@ namespace Day4
 {
     internal record Passport
     {
-        delegate bool ValidateField(string value);
+        private delegate bool ValidateField(string value);
 
         private readonly Dictionary<string, ValidateField> _requiredFields = new() {
             { "byr", ValidateByr },
@@ -68,7 +68,7 @@ namespace Day4
         /// <param name="value">The birth year.</param>
         /// <returns><see langword="true"/> if <paramref name="value"/> contains four digits; at least 1920 and at most 
         /// 2002; otherwise <see langword="false"/>.</returns>
-        static bool ValidateByr(string value) => int.TryParse(value, out int year) && year >= 1920 && year <= 2002;
+        private static bool ValidateByr(string value) => int.TryParse(value, out int year) && year >= 1920 && year <= 2002;
 
         /// <summary>
         /// Validate issue year. 
@@ -76,7 +76,7 @@ namespace Day4
         /// <param name="value">The issue year.</param>
         /// <returns><see langword="true"/> if <paramref name="value"/> contains four digits; at least 2010 and at most 
         /// 2020.; otherwise <see langword="false"/>.</returns>
-        static bool ValidateIyr(string value) => int.TryParse(value, out int year) && year >= 2010 && year <= 2020;
+        private static bool ValidateIyr(string value) => int.TryParse(value, out int year) && year >= 2010 && year <= 2020;
 
         /// <summary>
         /// Validate expiration year. 
@@ -84,7 +84,7 @@ namespace Day4
         /// <param name="value">The expiration year.</param>
         /// <returns><see langword="true"/> if <paramref name="value"/> contains four digits; at least 2020 and at most 
         /// 2030; otherwise <see langword="false"/>.</returns>
-        static bool ValidateEyr(string value) => int.TryParse(value, out int year) && year >= 2020 && year <= 2030;
+        private static bool ValidateEyr(string value) => int.TryParse(value, out int year) && year >= 2020 && year <= 2030;
 
         /// <summary>
         /// Validate height. 
@@ -94,7 +94,7 @@ namespace Day4
         ///     If cm, the number must be at least 150 and at most 193.
         ///     If in, the number must be at least 59 and at most 76; 
         /// otherwise <see langword="false"/>.</returns>
-        static bool ValidateHgt(string value)
+        private static bool ValidateHgt(string value)
             => int.TryParse(value[0..^2], out int height)
                && (value[^2..^0] == "cm" || value[^2..^0] == "in")
                && ((value[^2..^0] == "cm"
@@ -107,7 +107,7 @@ namespace Day4
         /// <param name="value">The hair color.</param>
         /// <returns><see langword="true"/> if <paramref name="value"/> contains a # followed by exactly six characters 0-9
         /// or a-f; otherwise <see langword="false"/>.</returns>
-        static bool ValidateHcl(string value)
+        private static bool ValidateHcl(string value)
             => value.Length == 7
                && value[0] == '#'
             && int.TryParse(value[1..^0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int _);
@@ -118,7 +118,7 @@ namespace Day4
         /// <param name="value">The eye color.</param>
         /// <returns><see langword="true"/> if <paramref name="value"/> contains exactly one of: 
         /// amb blu brn gry grn hzl oth; otherwise <see langword="false"/>.</returns>
-        static bool ValidateEcl(string value) 
+        private static bool ValidateEcl(string value) 
             => new string[] { "amb", "blu", "brn", "gry", "grn", "hzl", "oth" }.Contains(value);
 
         /// <summary>
@@ -127,14 +127,14 @@ namespace Day4
         /// <param name="value">The passport ID.</param>
         /// <returns><see langword="true"/> if <paramref name="value"/> contains a nine-digit number, including leading 
         /// zeroes; otherwise <see langword="false"/>.</returns>
-        static bool ValidatePid(string value) => value.Length == 9 && int.TryParse(value, out int _);
+        private static bool ValidatePid(string value) => value.Length == 9 && int.TryParse(value, out int _);
 
         /// <summary>
         /// Validate c ID. 
         /// </summary>
         /// <param name="value">The v ID.</param>
         /// <returns><see langword="true"/>.</returns>
-        static bool ValidateCid(string value) => true;
+        private static bool ValidateCid(string value) => true;
 
     }
 }
